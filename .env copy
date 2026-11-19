@@ -1,1 +1,7 @@
-jaja funciono supongo
+MONGO_INITDB_ROOT_USERNAME=admin
+MONGO_INITDB_ROOT_PASSWORD=PasswordSeguro123
+REDIS_USERNAME=redis-server 
+REDIS_PASSWORD=RedisSeguro123
+POSTGRES_USER=admin
+POSTGRES_PASSWORD=PostgresSeguro123
+POSTGRES_DB=tienda_ordenes

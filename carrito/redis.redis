@@ -1,0 +1,28 @@
+# 1. CACHÉ INDIVIDUAL DE PRODUCTOS (cache:producto:{id})
+# Contiene estrictamente: producto_id, precio y cantidad
+
+SET cache:producto:673b1a000000000000000001 '{"producto_id":"673b1a000000000000000001","precio":18500.00,"cantidad":1}' EX 300
+SET cache:producto:673b1a000000000000000002 '{"producto_id":"673b1a000000000000000002","precio":599.00,"cantidad":2}' EX 300
+SET cache:producto:673b1a000000000000000003 '{"producto_id":"673b1a000000000000000003","precio":14200.00,"cantidad":1}' EX 300
+
+
+# Limpiar carrito previo si existe
+DEL carrito:usr_1001
+RPUSH carrito:usr_1001 '{"producto_id":"673b1a000000000000000001","precio":18500.00,"cantidad":1}'
+EXPIRE carrito:usr_1001 86400
+RPUSH carrito:usr_1001 '{"producto_id":"673b1a000000000000000002","precio":599.00,"cantidad":2}'
+EXPIRE carrito:usr_1001 86400
+RPUSH carrito:usr_1001 '{"producto_id":"673b1a000000000000000003","precio":14200.00,"cantidad":1}'
+EXPIRE carrito:usr_1001 86400
+
+# Consultar todo el arreglo de productos del carrito (de índice 0 al último -1)
+LRANGE carrito:usr_1001 0 -1
+
+# Consultar cuántos artículos distintos hay en el carrito
+LLEN carrito:usr_1001
+
+# Eliminar un elemento específico del carrito (por valor exacto)
+LREM carrito:usr_1001 1 '{"producto_id":"673b1a000000000000000003","precio":14200.00,"cantidad":1}'
+
+# Verificar el tiempo de vida restante (TTL) en segundos
+TTL carrito:usr_1001
